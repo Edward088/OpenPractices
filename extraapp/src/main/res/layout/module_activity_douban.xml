@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--1.将界面设为全屏。view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE|
+View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+自己绘制statusbar背景。setStatusBarBackground函数可以设置statusbar背景。或者在布局文件中通过app:statusBarBackground设置。
+2.如果CoordinatorLayout的子View没有设置fitsSystemWindows，在layout时将子Viwe向下偏移statusbar的高度，用来显示CoordinatorLayout绘制的statusbar。如果子view设置了fitsSystemWindows，子View会覆盖CoordinatorLayout的statusbar。setStatusBarBackground设置的状态栏
+将被覆盖，不再起作用。具体逻辑可参考CoordinatorLayout的layoutChild 函数。
+3.调用dispatchApplyWindowInsets，让子view的behavior或子view接着处理fitsSystemWindows属性。CoordinatorLayout的很多常用的子view如AppBarLayout也对fitsSystemWindows进行了个性化处理。
+-->
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <!--CoordinatorLayout will not work if only one child-->
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/id_toolbar"
+        style="@style/ToolbarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:popupTheme="@style/ToolbarPopmenuStyle"
+        app:title="豆瓣TOP250"
+        app:titleTextColor="@android:color/white">
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_movie_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>
